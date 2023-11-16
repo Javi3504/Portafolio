@@ -5,8 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -24,15 +27,16 @@ public class Categoria implements Serializable {  //Serializacion funciona para 
     private String descripcion;
     private String rutaImagen;
     private boolean activo;
-
-    public Categoria() {
-    }
+    
+    @OneToMany
+    @JoinColumn(name="id_categoria", updatable = false)
+    List<Producto> productos;
+    
+    public Categoria() {}
 
     public Categoria(String descripcion, boolean activo) {
         this.descripcion = descripcion;
         this.activo = activo;
     }
-    
 
-    
 }
