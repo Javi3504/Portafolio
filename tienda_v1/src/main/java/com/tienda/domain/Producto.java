@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import lombok.Data;
@@ -21,25 +23,24 @@ public class Producto implements Serializable {  //Serializacion funciona para a
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Los valores generados que tipo de extrategia utilizan, identico = sea igual en la BD y en la clase
     @Column(name = "id_producto") // Decir cual es el nombre de la columna en la base de datos
     private long idProducto;
-    private long idCategoria;
     private String descripcion;
+    private String rutaImagen;
+    private boolean activo;
+    
     private String detalle;
     private double precio;
     private int existencias;
-    private String rutaImagen;
-    private boolean activo;
+    //private long idCategoria;
+    
+    
+    @ManyToOne
+    @JoinColumn(name="id_categoria")
+    Categoria categoria;
+    
+    public Producto() {}
 
-    public Producto() {
-    }
-
-    public Producto(long idProducto, long idCategoria, String descripcion, String detalle, double precio, int existencias, String rutaImagen, boolean activo) {
-        this.idProducto = idProducto;
-        this.idCategoria = idCategoria;
+    public Producto(String descripcion, boolean activo) {
         this.descripcion = descripcion;
-        this.detalle = detalle;
-        this.precio = precio;
-        this.existencias = existencias;
-        this.rutaImagen = rutaImagen;
         this.activo = activo;
     }
 
